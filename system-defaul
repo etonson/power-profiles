@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "▶ system-default: 回復系統預設"
+
+# 1. 回到 OS 預設平衡 profile
+powerprofilesctl set balanced
+
+# 2. CPU 上限最大值
+sudo cpupower frequency-set -u 3510MHz
+
+# 3. 回到預設 governor (powersave/performance 根據系統)
+sudo cpupower frequency-set -g powersave
+
+echo "✓ system-default applied: restored to system defaults"
+

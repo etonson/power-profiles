@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "▶ quiet-dev: 安靜開發模式"
+
+# 1. 設低功耗 profile
+powerprofilesctl set power-saver
+
+# 2. 限制 CPU 最大頻率到 3.2GHz（甜蜜點）
+sudo cpupower frequency-set -u 3200MHz
+
+# 3. 使用 powersave governor
+sudo cpupower frequency-set -g powersave
+
+echo "✓ quiet-dev applied: max freq 3.2GHz, powersave governor"
+

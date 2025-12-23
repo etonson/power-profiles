@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "▶ focus-build: 編譯 / 測試模式"
+
+# 1. 設平衡 profile
+powerprofilesctl set balanced
+
+# 2. 放開 CPU 上限到最大 3.51GHz
+sudo cpupower frequency-set -u 3510MHz
+
+# 3. 使用 performance governor
+sudo cpupower frequency-set -g performance
+
+echo "✓ focus-build applied: max freq 3.51GHz, performance governor"
+

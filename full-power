@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "▶ full-power: 極致效能模式"
+
+# 1. 設 performance profile
+powerprofilesctl set performance
+
+# 2. CPU 上限最大
+sudo cpupower frequency-set -u 3510MHz
+
+# 3. 使用 performance governor
+sudo cpupower frequency-set -g performance
+
+echo "✓ full-power applied: max freq 3.51GHz, performance governor"
+
