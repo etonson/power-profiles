@@ -1,16 +1,23 @@
 #!/bin/bash
 set -e
 
-echo "▶ full-power: 極致效能模式"
+echo "▶ full-power: 極致效能模式 (AMD)"
 
-# 1. 設 performance profile
+# 1. 效能模式
 powerprofilesctl set performance
 
-# 2. CPU 上限最大
-sudo cpupower frequency-set -u 3510MHz
+# 2. EPP = performance
+for cpu in /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference; do
+  [ -f "$cpu" ] && echo performance | tee $cpu > /dev/null
+done
 
-# 3. 使用 performance governor
-sudo cpupower frequency-set -g performance
+# 3. Boost 全開
+if [ -f /sys/devices/system/cpu/cpufreq/boost ]; then
+  echo 1 | tee /sys/devices/system/cpu/cpufreq/boost > /dev/null
+fi
 
-echo "✓ full-power applied: max freq 3.51GHz, performance governor"
+echo "✓ full-power applied:"
+echo "  - profile: performance"
+echo "  - EPP: performance"
+echo "  - boost: on"
 

@@ -1,23 +1,23 @@
 #!/bin/bash
 set -e
 
-echo "▶ focus-build: 編譯 / 測試模式 (AMD)"
+echo "▶ system-default: 回復系統預設 (AMD)"
 
-# 1. 平衡模式
+# 1. 回到平衡
 powerprofilesctl set balanced
 
-# 2. EPP = balance_performance
+# 2. EPP 回 default
 for cpu in /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference; do
-  [ -f "$cpu" ] && echo balance_performance | tee $cpu > /dev/null
+  [ -f "$cpu" ] && echo default | tee $cpu > /dev/null
 done
 
-# 3. 開啟 boost（但不極端）
+# 3. Boost 開啟（Ubuntu 預設）
 if [ -f /sys/devices/system/cpu/cpufreq/boost ]; then
   echo 1 | tee /sys/devices/system/cpu/cpufreq/boost > /dev/null
 fi
 
-echo "✓ focus-build applied:"
+echo "✓ system-default applied:"
 echo "  - profile: balanced"
-echo "  - EPP: balance_performance"
+echo "  - EPP: default"
 echo "  - boost: on"
 
